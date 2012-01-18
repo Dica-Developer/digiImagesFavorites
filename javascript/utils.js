@@ -1,5 +1,6 @@
 var globalLoadCount = 0;
 var globalImageCount = 0;
+var req;
 
 function openUrl()
 {
@@ -30,7 +31,7 @@ function showPhotos() {
   globalLoadCount++;
   var filterArray = {};
   var filter = localStorage["data.user.filter"];
-  if (null != filter) {
+  if (null !== filter) {
     filterArray = JSON.parse(filter).split("\n");
   }
 
@@ -45,7 +46,7 @@ function showPhotos() {
       img.src = thumbnail.getAttribute("url");
       img.title = titleText;
 
-      var linkSrc = item.getElementsByTagName("content")[0].getAttribute("url")
+      var linkSrc = item.getElementsByTagName("content")[0].getAttribute("url");
       var link = document.createElement("a");
       link.href = "http://www.digi-images.de/showImage.html?imageId="+ linkSrc.replace(/^.*imageId=(\d+).*$/, "$1") +"&custAlbum=lastup";
       link.appendChild(img);
@@ -63,15 +64,13 @@ function showPhotos() {
 function load(start) {
   var host = localStorage["data.rss.url"];
   var url = "http://www.digi-images.de/cooliris.rss?&custAlbum=lastup&start=" + start;
-  if (null != host && host.match("^.*?:\\.*")) {
+  if (null !== host && host.match("^.*?:\\.*")) {
     url = JSON.parse(host);
   }
 
-  var req = new XMLHttpRequest();
+  req = new XMLHttpRequest();
   req.open("GET", url, true);
   req.onload = showPhotos;
   req.send(null);
-
-  return req;
 }
 
