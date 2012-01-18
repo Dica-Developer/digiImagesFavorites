@@ -1,0 +1,18 @@
+{
+	"name": "Digi-Images Favorites",
+	"version": "4.0",
+	"description": "Show my favorite Digi-Images photos. See Digi-Images on http://www.digi-images.de/ .",
+	"browser_action": {
+		"default_icon": "icon.png",
+		"default_title": "Digi-Images Favorites",
+		"popup": "popup.html"
+	},
+	"icons": {
+	  "128": "icon.png",
+	  "48": "icon.png",
+	  "16": "icon.png"
+	},
+	"options_page": "options.html",
+	"permissions": ["tabs", "http://www.digi-images.de/*"]
+}
+
