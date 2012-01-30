@@ -57,7 +57,7 @@ function showPhotos() {
   }
 
   if (globalImageCount < 35) {
-    req = load(35 * globalLoadCount);
+    load(35 * globalLoadCount);
   }
 }
 
