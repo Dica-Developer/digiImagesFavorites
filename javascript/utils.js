@@ -31,7 +31,7 @@ function showPhotos() {
   globalLoadCount++;
   var filterArray = {};
   var filter = localStorage["data.user.filter"];
-  if (null !== filter) {
+  if (null !== filter && undefined !== filter) {
     filterArray = JSON.parse(filter).split("\n");
   }
 
@@ -64,7 +64,7 @@ function showPhotos() {
 function load(start) {
   var host = localStorage["data.rss.url"];
   var url = "http://www.digi-images.de/cooliris.rss?&custAlbum=lastup&start=" + start;
-  if (null !== host && host.match("^.*?:\\.*")) {
+  if (null !== host && undefined !== host && host.match("^.*?:\\.*")) {
     url = JSON.parse(host);
   }
 
