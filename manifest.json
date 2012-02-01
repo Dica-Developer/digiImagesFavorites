@@ -1,6 +1,6 @@
 {
 	"name": "Digi-Images Favorites",
-	"version": "6.0",
+	"version": "7.0",
 	"description": "Show my favorite Digi-Images photos. See Digi-Images on http://www.digi-images.de/ .",
 	"browser_action": {
 		"default_icon": "icon.png",
