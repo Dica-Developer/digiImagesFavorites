@@ -8,7 +8,7 @@ function openUrl()
   chrome.tabs.getSelected(null, function(tab)
   {
     chrome.tabs.create({ index: tab.index + 1, url: href });
-  }); 
+  });
 }
 
 function contains(shouldContain, filter) {
@@ -65,7 +65,7 @@ function load(start) {
   var host = localStorage["data.rss.url"];
   var url = "http://www.digi-images.de/cooliris.rss?&custAlbum=lastup&start=" + start;
   if (null !== host && undefined !== host && host.match("^.*?:\\.*")) {
-    url = JSON.parse(host);
+    url = JSON.parse(host)+ "&start=" + start;
   }
 
   req = new XMLHttpRequest();
@@ -73,4 +73,3 @@ function load(start) {
   req.onload = showPhotos;
   req.send(null);
 }
-
