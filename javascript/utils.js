@@ -1,21 +1,25 @@
+/*global chrome, localStorage, XMLHttpRequest*/
 var globalLoadCount = 0;
 var globalImageCount = 0;
 var req;
 
-function openUrl()
-{
+function openUrl() {
   var href = this.href;
-  chrome.tabs.getSelected(null, function(tab)
-  {
-    chrome.tabs.create({ index: tab.index + 1, url: href });
+  chrome.tabs.getSelected(null, function (tab) {
+    chrome.tabs.create({
+      index: tab.index + 1,
+      url: href
+    });
   });
 }
 
 function contains(shouldContain, filter) {
   var result = false;
+  var i = 0;
+  var regexp = null;
   if (filter.length > 0) {
-    for (var i = 0; i < filter.length; i++) {
-      var regexp = new RegExp(filter[i]);
+    for (i = 0; i < filter.length; i++) {
+      regexp = new RegExp(filter[i]);
       if (shouldContain.match(regexp)) {
         result = true;
         break;
@@ -36,19 +40,20 @@ function showPhotos() {
   }
 
   var items = req.responseXML.getElementsByTagName("item");
-  for (var i = 0; i < items.length && globalImageCount < 35; i++) {
-    var item = items[i];
-    var thumbnail = item.getElementsByTagName("thumbnail")[0];
-    var title = item.getElementsByTagName("title")[0];
-    var titleText = title.firstChild.nodeValue;
+  var item, thumbnail, title, titleText, i, img, linkSrc, link;
+  for (i = 0; i < items.length && globalImageCount < 35; i++) {
+    item = items[i];
+    thumbnail = item.getElementsByTagName("thumbnail")[0];
+    title = item.getElementsByTagName("title")[0];
+    titleText = title.firstChild.nodeValue;
     if (contains(titleText, filterArray)) {
-      var img = document.createElement("image");
+      img = document.createElement("img");
       img.src = thumbnail.getAttribute("url");
       img.title = titleText;
 
-      var linkSrc = item.getElementsByTagName("content")[0].getAttribute("url");
-      var link = document.createElement("a");
-      link.href = "http://www.digi-images.de/showImage.html?imageId="+ linkSrc.replace(/^.*imageId=(\d+).*$/, "$1") +"&custAlbum=lastup";
+      linkSrc = item.getElementsByTagName("content")[0].getAttribute("url");
+      link = document.createElement("a");
+      link.href = "http://www.digi-images.de/showImage.html?imageId=" + linkSrc.replace(/^.*imageId=(\d+).*$/, "$1") + "&custAlbum=lastup";
       link.appendChild(img);
       link.addEventListener("click", openUrl, false);
       document.body.appendChild(link);
@@ -65,7 +70,7 @@ function load(start) {
   var host = localStorage["data.rss.url"];
   var url = "http://www.digi-images.de/cooliris.rss?&custAlbum=lastup&start=" + start;
   if (null !== host && undefined !== host && host.match("^.*?:\\.*")) {
-    url = JSON.parse(host)+ "&start=" + start;
+    url = JSON.parse(host) + "&start=" + start;
   }
 
   req = new XMLHttpRequest();
@@ -73,3 +78,7 @@ function load(start) {
   req.onload = showPhotos;
   req.send(null);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  load(0);
+}, false);

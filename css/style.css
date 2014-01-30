@@ -1,0 +1,13 @@
+body {
+  min-width: 416px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+img {
+  margin: 2px;
+  border: 2px solid black;
+  vertical-align: middle;
+  width: 75px;
+  height: 75px;
+}
