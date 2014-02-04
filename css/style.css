@@ -1,13 +1,11 @@
 body {
-  min-width: 416px;
+  margin: 0;
+  border: 0;
   overflow-x: hidden;
   overflow-y: hidden;
 }
 
 img {
-  margin: 2px;
-  border: 2px solid black;
-  vertical-align: middle;
-  width: 75px;
-  height: 75px;
+  margin: 0;
+  border: 0;
 }
